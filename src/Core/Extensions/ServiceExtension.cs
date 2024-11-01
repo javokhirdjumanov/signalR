@@ -1,23 +1,22 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Hosting;
 
 namespace Core.Extensions;
 public static class ServiceExtension
 {
     public static WebApplication ConfigureDefaults(this WebApplication app, string? baseUrl = null)
     {
-        Log.Information("Started at: {0}. PID: {1}", DateTime.Now, Environment.ProcessId);
-
-/*#if !DEBUG
-        app.UseDefaultSwagger($"/gateway{baseUrl}");
-#else
-        app.UseDefaultSwagger(baseUrl);
-#endif
-        app.UseCors();*/
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI();
+        }
 
         //app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
 
         app.UseHealthChecks("/healthy");
         app.UseAuthorization();
+        app.MapControllers();
 
         return app;
     }

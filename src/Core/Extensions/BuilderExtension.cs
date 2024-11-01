@@ -20,7 +20,6 @@ public static class BuilderExtension
         IHttpContextAccessor httpContextAccessor = new HttpContextAccessor();
         builder.Services.AddSingleton(httpContextAccessor);
 
-
         builder.Services.Configure<ApiBehaviorOptions>(options =>
         {
             options.SuppressModelStateInvalidFilter = true;
@@ -28,6 +27,7 @@ public static class BuilderExtension
 
         builder.Logging.ClearProviders();
 
+        builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen(options =>
         {
@@ -54,8 +54,6 @@ public static class BuilderExtension
         //builder.Services.AddScoped<GlobalExceptionHandlerMiddleware>();
 
         AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
-
-        var authSection = builder.Configuration.GetRequiredSection("Auth");
 
         return builder;
     }
