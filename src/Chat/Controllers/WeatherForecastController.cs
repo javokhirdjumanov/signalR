@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace signalR.Controllers
+namespace Chat.Controllers
 {
     [ApiController]
     [Route("[controller]")]

@@ -1,4 +1,4 @@
-namespace signalR
+namespace Chat
 {
     public class WeatherForecast
     {
