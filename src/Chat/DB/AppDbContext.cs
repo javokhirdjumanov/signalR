@@ -9,6 +9,7 @@ namespace Chat.DB
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Message> Messages { get; set; }
+        public DbSet<DB.Models.Chat> Chats { get; set; }
 
         public AppDbContext()
         { }
