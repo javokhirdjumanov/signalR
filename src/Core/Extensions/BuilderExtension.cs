@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Npgsql;
 using System;
 using System.Reflection;
 
@@ -57,17 +59,19 @@ public static class BuilderExtension
 
         return builder;
     }
-    public static WebApplicationBuilder ConfiguredDbContext(this WebApplicationBuilder builder)
+
+    public static WebApplicationBuilder ConfiguredDbContext<TContext>(this WebApplicationBuilder builder, string connectionString)
+        where TContext : DbContext
     {
-        /*builder.Services.AddDbContextPool<AppDbContext>(optionsBuilder =>
+        builder.Services.AddDbContextPool<TContext>(optionsBuilder =>
         {
             var dataSourceBuilder =
-                 new NpgsqlDataSourceBuilder(builder.Configuration.GetConnectionString("DefaultConnectionString"))
-                      .EnableDynamicJson();
+                new NpgsqlDataSourceBuilder(builder.Configuration.GetConnectionString(connectionString))
+                    .EnableDynamicJson();
 
             optionsBuilder
-                 .UseNpgsql(dataSourceBuilder.Build(), options => { });
-        });*/
+                .UseNpgsql(dataSourceBuilder.Build(), options => { });
+        });
 
         return builder;
     }
